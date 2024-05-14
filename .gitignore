@@ -1,0 +1,31 @@
+# Exclude everything
+*
+
+# but not these files;
+!*.java
+
+# but not these folders;
+
+# but not current dir.
+#     must explicitly be allowed
+#     allthough `gcloud deploy` fails
+#     because above whitelisted files
+#     will be ignored
+!.
+
+
+
+
+## There is 2 ways to do this:
+
+## 1st (clean ignore but slash at folder path):
+# *           # ignore everything
+# !folder/**  # but not this folder
+# !file       # but not this file
+# !.          # but not current dir
+
+## 2nd (start with slash and clean folder path):
+# /*          # ignore everything
+# !folder     # but not this folder
+# !file       # but not this file
+# !.          # but not current dir
