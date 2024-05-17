@@ -25,8 +25,19 @@ public class Player {
         this.hand.add(piece);
     }
 
-    public Domino play() {
+    public Domino play(int piece) {
         // Domino d = this.hand.get(0);
         return this.hand.remove(0);
+    }
+
+    public String toString() {
+        String str = this.getName();
+        str += ": ";
+
+        for(Domino p: this.hand) {
+            str += p.toString() + " ";
+        }
+
+        return str.trim();
     }
 }

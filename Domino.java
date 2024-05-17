@@ -22,10 +22,6 @@ public class Domino {
         this.right = right;
     }
 
-    public String toString() {
-        return this.getLeft() + "•" + this.getRight();
-    }
-
     public void flip() {
         this.isFaceDown = !this.isFaceDown;
     }
@@ -34,5 +30,9 @@ public class Domino {
         int buffer = this.getLeft();
         this.setLeft(this.getRight());
         this.setRight(buffer);
+    }
+
+    public String toString() {
+        return this.getLeft() + "•" + this.getRight();
     }
 }

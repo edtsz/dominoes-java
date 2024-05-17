@@ -40,11 +40,9 @@ public class Deck {
         String str = "";
 
         for(int i = 0; i < this.dominoes.size(); i++) {
-            Domino p = this.dominoes.get(i);
-
-            str += " " + p.toString() + " ";
+            str += this.dominoes.get(i) + " ";
         }
 
-        return str;
+        return str.trim();
     }
 }

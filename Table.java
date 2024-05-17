@@ -1,15 +1,18 @@
 import java.util.ArrayList;
 
 public class Table {
+    private static final int MAX_PLAYERS = 4;
+    private static final int MIN_PLAYERS = 2;
+
     private ArrayList<Player> players;
     private ArrayList<Domino> dominos;
     private Deck dominoDeck;
-    private int currentPlayer;
-    private static final int MAX_PLAYERS = 4;
-
+    private int round;
+    private int numOfPlayers;
 
     public Table() {
         this.players = new ArrayList<Player>();
+        this.dominoDeck = new Deck();
     }
 
     public void addPlayer(Player player) {
@@ -27,10 +30,29 @@ public class Table {
         return this.dominoDeck;
     }
 
-    public Player getCurrentPlayer() {
-        this.currentPlayer = (this.currentPlayer + 1) % this.players.size();
+    public int getRound() {
+        return this.round;
+    }
+    public void nextRound() {
+        this.round++;
+    }
 
-        return this.players.get(currentPlayer);
+    public void setNumberOfPlayers(int numOfPlayers) {
+        if (numOfPlayers > this.MAX_PLAYERS) {
+            throw new IllegalStateException("MAX available chairs " + this.MAX_PLAYERS);
+        }
+        if (numOfPlayers < this.MIN_PLAYERS) {
+            throw new IllegalStateException("MIN available chairs " + this.MIN_PLAYERS);
+        }
+
+        this.numOfPlayers = numOfPlayers;
+    }
+    public int getNumberOfPlayers() {
+        return this.numOfPlayers;
+    }
+
+    public Player getCurrentPlayer() {
+        return this.players.get(this.round % this.players.size());
     }
 
     public void distributeDominoesToPlayers() {
@@ -43,7 +65,7 @@ public class Table {
 
     public void playTurn() {
         // Player currentPlayer = this.getCurrentPlayer(); // you need to implement this method based on your game rules
-        Domino domino = this.getCurrentPlayer().play(); // you need to implement this method in Player class
+        Domino domino = this.getCurrentPlayer().play(0); // you need to implement this method in Player class
 
         if (!this.isValidMove(domino)) {
             throw new IllegalArgumentException("Invalid move!");
