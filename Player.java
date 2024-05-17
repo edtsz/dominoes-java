@@ -2,10 +2,11 @@ import java.util.ArrayList;
 
 public class Player {
     private String name;
-    private ArrayList<Domino> hand = new ArrayList<>();
+    private ArrayList<Tile> hand;
 
     public Player(String name) {
         this.setName(name);
+        this.hand = new ArrayList<Tile>();
     }
 
     public String getName() {
@@ -15,18 +16,28 @@ public class Player {
         this.name = name;
     }
 
-    public ArrayList<Domino> getHand() {
+    public ArrayList<Tile> getHand() {
         return this.hand;
     }
-    public void setHand(ArrayList<Domino> hand) {
+    public void setHand(ArrayList<Tile> hand) {
         this.hand = hand;
     }
-    public void pickFrom(Domino piece) {
+    public void pickFrom(Tile piece) {
         this.hand.add(piece);
     }
 
-    public Domino play(int piece) {
-        // Domino d = this.hand.get(0);
+    public Tile highestTile() {
+        Tile p = this.hand.get(0);
+        for(Tile c: this.hand) {
+            if (c.value() > p.value()) {
+                p = c;
+            }
+        }
+        return p;
+    }
+
+    public Tile play(int piece) {
+        // Tile d = this.hand.get(0);
         return this.hand.remove(0);
     }
 
@@ -34,7 +45,7 @@ public class Player {
         String str = this.getName();
         str += ": ";
 
-        for(Domino p: this.hand) {
+        for(Tile p: this.hand) {
             str += p.toString() + " ";
         }
 

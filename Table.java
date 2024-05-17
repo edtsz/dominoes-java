@@ -5,14 +5,15 @@ public class Table {
     private static final int MIN_PLAYERS = 2;
 
     private ArrayList<Player> players;
-    private ArrayList<Domino> dominos;
-    private Deck dominoDeck;
+    private ArrayList<Tile> tiles;
+    private Pile pile;
     private int round;
     private int numOfPlayers;
+    private int currentPlayer;
 
     public Table() {
         this.players = new ArrayList<Player>();
-        this.dominoDeck = new Deck();
+        this.pile = new Pile();
     }
 
     public void addPlayer(Player player) {
@@ -23,11 +24,11 @@ public class Table {
         this.players.add(player);
     }
 
-    public void setDeck(Deck dominoes) {
-        this.dominoDeck = dominoes;
+    public void setPile(Pile pile) {
+        this.pile = pile;
     }
-    public Deck getDeck() {
-        return this.dominoDeck;
+    public Pile getPile() {
+        return this.pile;
     }
 
     public int getRound() {
@@ -35,6 +36,7 @@ public class Table {
     }
     public void nextRound() {
         this.round++;
+        this.currentPlayer = (this.currentPlayer + 1) % this.players.size();
     }
 
     public void setNumberOfPlayers(int numOfPlayers) {
@@ -52,30 +54,26 @@ public class Table {
     }
 
     public Player getCurrentPlayer() {
-        return this.players.get(this.round % this.players.size());
+        return this.players.get(this.currentPlayer);
     }
 
-    public void distributeDominoesToPlayers() {
+    public void distributeTilesToPlayers() {
         for(int j = 0; j < 7; j++) {
             for (int i = 0; i < this.players.size(); i++) {
-                this.players.get(i).pickFrom(this.dominoDeck.pull());
+                this.players.get(i).pickFrom(this.pile.pull());
             }
         }
     }
 
-    public void playTurn() {
-        // Player currentPlayer = this.getCurrentPlayer(); // you need to implement this method based on your game rules
-        Domino domino = this.getCurrentPlayer().play(0); // you need to implement this method in Player class
+    public void determineStartingPlayer() {
+        int value = 0;
 
-        if (!this.isValidMove(domino)) {
-            throw new IllegalArgumentException("Invalid move!");
+        for(int i = 0; i < this.players.size(); i++) {
+            int new_value = this.players.get(i).highestTile().value();
+            if (new_value > value) {
+                value = new_value;
+                this.currentPlayer = i;
+            }
         }
-        // do something with the domino...
-        System.out.println("// do something with the domino...");
-    }
-
-    private boolean isValidMove(Domino domino) {
-        // you need to implement this method based on your game rules
-        return true;
     }
 }

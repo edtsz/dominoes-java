@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-class Dominoes {
+class Game {
 	public static void main(String[] args) {
 		clearTerminal();
 
@@ -28,16 +28,19 @@ class Dominoes {
 		}
 		System.out.println();
 
-		table.distributeDominoesToPlayers();
+		table.distributeTilesToPlayers();
+
+		System.out.println();
+		System.out.print("Deck: ");
+		System.out.println(table.getPile().toString());
+
+		table.determineStartingPlayer();
+		System.out.println();
 
 		for (int i = 0; i < table.getNumberOfPlayers(); i++) {
 			System.out.println(table.getCurrentPlayer());
 			table.nextRound();
 		}
-
-		System.out.println();
-		System.out.print("Deck: ");
-		System.out.println(table.getDeck().toString());
 	}
 
     public static void clearTerminal() {

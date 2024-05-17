@@ -1,9 +1,9 @@
-public class Domino {
+public class Tile {
     private int left;
     private int right;
     private boolean isFaceDown = true;
 
-    public Domino(int left, int right) {
+    public Tile(int left, int right) {
         this.setLeft(left);
         this.setRight(right);
     }
@@ -20,6 +20,18 @@ public class Domino {
     }
     public void setRight(int right) {
         this.right = right;
+    }
+
+    public boolean isDouble() {
+        return this.right == this.left;
+    }
+
+    public int value() {
+        int value = this.right + this.left;
+        if (this.isDouble()) {
+            value += 20; // by pass to highest value
+        }
+        return value;
     }
 
     public void flip() {
