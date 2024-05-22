@@ -29,18 +29,54 @@ class Game {
 		System.out.println();
 
 		table.distributeTilesToPlayers();
-
-		System.out.println();
-		System.out.print("Deck: ");
-		System.out.println(table.getPile().toString());
-
 		table.determineStartingPlayer();
-		System.out.println();
 
-		for (int i = 0; i < table.getNumberOfPlayers(); i++) {
-			System.out.println(table.getCurrentPlayer());
+		do {
+			clearTerminal();
+			System.out.print("Pile: ");
+			System.out.println(table.getPile().toString());
+
+			System.out.println();
+			table.print();
+			System.out.println();
+
+			Player player = table.getCurrentPlayer();
+			System.out.print("`" + player.getName() + "` ");
+			System.out.println("escolha uma peça: ");
+			player.printHand();
+			System.out.print("ou # para pescar: ");
+
+			String choose = scanner.nextLine();
+			if (choose.equals("#")) {
+				player.pickFrom(table.getPile().pull());
+				continue;
+			}
+
+			int tile;
+			try {
+				tile = Integer.parseInt(choose);
+			} catch (Exception ex) {
+				continue;
+			}
+			if (! player.isValisTile(tile)) {
+				continue;
+			}
+
+			// Pick a piece from player
+			Tile piece = player.getHand().get(tile);
+
+			//
+			if (!table.isValidMove(piece)) {
+				continue;
+			}
+
+			player.play(tile);
+			table.addTile(piece);
+
 			table.nextRound();
-		}
+
+		} while (true);
+
 	}
 
     public static void clearTerminal() {

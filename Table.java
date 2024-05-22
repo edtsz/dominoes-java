@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Table {
     private static final int MAX_PLAYERS = 4;
@@ -14,6 +15,11 @@ public class Table {
     public Table() {
         this.players = new ArrayList<Player>();
         this.pile = new Pile();
+        this.tiles = new ArrayList<Tile>();
+    }
+
+    public void addTile(Tile tile) {
+        this.tiles.add(tile);
     }
 
     public void addPlayer(Player player) {
@@ -75,5 +81,22 @@ public class Table {
                 this.currentPlayer = i;
             }
         }
+    }
+
+    public boolean isValidMove(Tile tile) {
+        int rnd = new Random().nextInt();
+        return rnd % 2 == 0;
+    }
+
+    public void print() {
+        String str = "---- TABLE ----\n";
+
+        for (Tile t: this.tiles) {
+            str += t.toString() + " ";
+        }
+
+        str += "\n---- TABLE ----\n";
+
+        System.out.println(str.trim());
     }
 }
